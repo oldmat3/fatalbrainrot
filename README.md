@@ -1,5 +1,18 @@
-# fatalbrainrot
-contributing to the downfall of society
-when installing u need to manuly install imagemagick just read https://www.geeksforgeeks.org/introduction-to-moviepy/ easer than me putting instructions here 
-need to install FFmpeg
-to use chromedriver you will need to use the corrisponding version of chrome, the easist way ive found was to download and install an old version which will then start downloading the newest version when you open it, let it do that, when its done go into the app files and delete the files for the new version, chrome will nolonger try and update after this
+Project Setup Guide
+Prerequisites
+
+Before you start, ensure you have the following installed:
+
+    ImageMagick
+        Install manually. For detailed instructions, refer to GeeksforGeeks ImageMagick Guide.
+
+    FFmpeg
+        Download and install FFmpeg.
+
+    ChromeDriver
+        Ensure you have the version of ChromeDriver that matches your installed version of Chrome.
+        To avoid auto-updates:
+            Download and install an older version of Chrome.
+            Open Chrome to let it update to the latest version.
+            After the update completes, go to the app files and delete the files for the new version.
+            Chrome should no longer auto-update.
