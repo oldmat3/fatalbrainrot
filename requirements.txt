@@ -1,0 +1,7 @@
+praw
+edge-tts
+pytubefix
+selenium
+Pillow
+moviepy
+numpy

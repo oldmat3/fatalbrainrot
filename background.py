@@ -1,4 +1,16 @@
+"""
+This script is used to create a video with a background image and an audio file.
+"""
+
+# Standard Library Imports
+
+# Third Party Imports
 from moviepy.editor import *
+
+# Local Imports
+
+# Constants
+
 
 video_clip = VideoFileClip("13 Minutes Minecraft Parkour Gameplay [Free to Use] [Map Download].mp4")
 
@@ -12,7 +24,7 @@ else:
     new_width = phone_width
     new_height = phone_width * phone_aspect_ratio[1] / phone_aspect_ratio[0]
 
-video_clip = video_clip.crop(width=new_width, height=new_height, x_center=phone_width / 2, y_center=phone_height / 2)
+video_clip = video_clip.crop(width=new_width, height=new_height, x_center=phone_width / 2, y_center=phone_height / 2)  # No idea how this is working given the crop function doesn't exist
 
 title_audio = AudioFileClip("title.mp3")
 contents_audio = AudioFileClip("contents.mp3")
