@@ -2,7 +2,8 @@ import praw
 import asyncio
 import edge_tts
 import os
-from pytube import YouTube
+from pytubefix import YouTube
+from pytubefix.cli import on_progress
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -15,24 +16,14 @@ contentsaudio = 'contents.mp3'
 titless = 'title.png'
 creditbarss = 'credit.png'
 finalimgage = 'image.png'
-baskgroundvideo = '13 Minutes Minecraft Parkour Gameplay [Free to Use] [Map Download].mp4'
-video_url = 'https://www.youtube.com/watch?v=NX-i0IWl3yg'
+backgroundvideo = '13 Minutes Minecraft Parkour Gameplay [Free to Use] [Map Download].mp4'
+url = 'https://www.youtube.com/watch?v=NX-i0IWl3yg'
 service = Service(r'C:\Users\kalen\Downloads\chromedriver_win32\chromedriver.exe')
 
-if os.path.exists(titleaudio):
-    os.remove(titleaudio)
-
-if os.path.exists(contentsaudio):
-    os.remove(contentsaudio)
-
-if os.path.exists(titless):
-    os.remove(titless)
-
-if os.path.exists(creditbarss):
-    os.remove(creditbarss)
-
-if os.path.exists(finalimgage):
-    os.remove(finalimgage)
+# Remove existing files if they exist
+for file in [titleaudio, contentsaudio, titless, creditbarss, finalimgage]:
+    if os.path.exists(file):
+        os.remove(file)
 
 reddit = praw.Reddit(
     client_id="OAFOzx9mKDcw1hyTYc9h7A",
@@ -71,22 +62,25 @@ async def amain():
 
 if __name__ == "__main__":
     asyncio.run(amain())
+
 try:
-    if os.path.exists(baskgroundvideo):
-        print("background video already downloaded")
+    if os.path.exists(backgroundvideo):
+        print("Background video already downloaded")
     else:
-        yt = YouTube(video_url)
-        stream = yt.streams.get_highest_resolution()
-        stream.download()
+        yt = YouTube(url, on_progress_callback=on_progress)
+        print(yt.title)
+        ys = yt.streams.get_highest_resolution()
+        ys.download()
         print("Download completed")
 except Exception as e:
-    print(f"if your seeing this its youtube, Go complain on the pytube GitHub until they fix it.")
+    print(f"Error downloading video: {e}")
 
 driver = webdriver.Chrome(service=service)
 driver.get(PostLink)
 
 driver.implicitly_wait(10)
 
+# Capture title screenshot
 title_element = driver.find_element(By.CSS_SELECTOR, '[slot="title"]')
 title_location = title_element.location
 title_size = title_element.size
@@ -100,8 +94,9 @@ right = title_location['x'] + title_size['width']
 bottom = title_location['y'] + title_size['height']
 
 title_image = image.crop((left, top, right, bottom))
-title_image.save('title.png')
+title_image.save(titless)
 
+# Capture credit bar screenshot
 credit_bar_element = driver.find_element(By.CSS_SELECTOR, '[slot="credit-bar"]')
 credit_bar_location = credit_bar_element.location
 credit_bar_size = credit_bar_element.size
@@ -112,12 +107,13 @@ right = credit_bar_location['x'] + credit_bar_size['width']
 bottom = credit_bar_location['y'] + credit_bar_size['height']
 
 credit_bar_image = image.crop((left, top, right, bottom))
-credit_bar_image.save('credit.png')
+credit_bar_image.save(creditbarss)
 
 driver.quit()
 
+# Combine images
 command = [
-    'magick', 'convert',
+    'magick',
     creditbarss,
     '-background', 'none',
     titless,
