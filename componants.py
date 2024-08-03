@@ -16,12 +16,14 @@ contentsaudio = 'contents.mp3'
 titless = 'title.png'
 creditbarss = 'credit.png'
 finalimgage = 'image.png'
+finalnooverlay = 'final-overlay.mp4'
+final = 'final.mp4'
 backgroundvideo = '13 Minutes Minecraft Parkour Gameplay [Free to Use] [Map Download].mp4'
 url = 'https://www.youtube.com/watch?v=NX-i0IWl3yg'
 service = Service(r'C:\Users\kalen\Downloads\chromedriver_win32\chromedriver.exe')
 
 # Remove existing files if they exist
-for file in [titleaudio, contentsaudio, titless, creditbarss, finalimgage]:
+for file in [titleaudio, contentsaudio, titless, creditbarss, finalimgage, finalnooverlay, final]:
     if os.path.exists(file):
         os.remove(file)
 
@@ -119,7 +121,7 @@ command = [
     titless,
     '-background', 'none',
     '-gravity', 'north',
-    '-splice', '0x5',
+    '-splice', '0x0',
     '-append',
     finalimgage
 ]
