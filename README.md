@@ -22,7 +22,7 @@ Before you start, ensure you have the following installed:
 1. Clone the repository.
 
 ```bash
-git clone https://github.com/Yuki-42/fatalbrainrot.git
+git clone https://github.com/oldmat3/fatalbrainrot.git
 ```
 
 2. Create a virtual environment.
