@@ -1,7 +1,8 @@
 praw
 edge-tts
+chromedriver-autoinstaller
+pillow
 pytubefix
 selenium
-Pillow
 moviepy
 numpy
