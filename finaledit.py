@@ -53,3 +53,5 @@ if os.path.exists(output_file):
         print("Temporary file 'final-overlay.mp4' deleted successfully.")
     except Exception as e:
         print(f"Error deleting file: {e}")
+
+os.system('python minute.py')
