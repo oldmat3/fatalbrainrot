@@ -1,6 +1,7 @@
 from moviepy.editor import VideoFileClip, ImageClip, CompositeVideoClip
 from PIL import Image
 import numpy as np
+import os
 
 def resize_image(image_clip, height):
     """
@@ -42,4 +43,13 @@ image = image.set_position(("center", "center"))
 composite = CompositeVideoClip([video, image])
 
 # Export the final video with the combined layers
-composite.write_videofile("final.mp4", codec="libx264")
+output_file = "final.mp4"
+composite.write_videofile(output_file, codec="libx264")
+
+# Check if the final video was created and then delete the overlay video
+if os.path.exists(output_file):
+    try:
+        os.remove("final-overlay.mp4")
+        print("Temporary file 'final-overlay.mp4' deleted successfully.")
+    except Exception as e:
+        print(f"Error deleting file: {e}")
