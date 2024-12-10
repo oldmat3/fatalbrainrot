@@ -14,24 +14,42 @@ from selenium.webdriver.chrome.service import Service
 from moviepy.editor import VideoFileClip, AudioFileClip, concatenate_audioclips, ImageClip, CompositeVideoClip
 import numpy as np
 
-# Define filenames used in the script
-titleaudio = 'title.mp3'
-contentsaudio = 'contents.mp3'
-titless = 'title.png'
-creditbarss = 'credit.png'
-finalimgage = 'image.png'
-finalnooverlay = 'final-overlay.mp4'
-final = 'final.mp4'
+# Define the components and outputs directories
+components_dir = "components"
+outputs_dir = "outputs"
+
+# Remove all files in the components folder if they exist
+if os.path.exists(components_dir):
+    for file in os.listdir(components_dir):
+        file_path = os.path.join(components_dir, file)
+        try:
+            os.remove(file_path)
+            print(f"Deleted: {file_path}")
+        except Exception as e:
+            print(f"Error deleting {file_path}: {e}")
+
+# Remove all files in the outputs folder if they exist
+if os.path.exists(outputs_dir):
+    for file in os.listdir(outputs_dir):
+        file_path = os.path.join(outputs_dir, file)
+        try:
+            os.remove(file_path)
+            print(f"Deleted: {file_path}")
+        except Exception as e:
+            print(f"Error deleting {file_path}: {e}")
+
+# Define filenames used in the script, saving all components in the components folder
+titleaudio = os.path.join(components_dir, 'title.mp3')
+contentsaudio = os.path.join(components_dir, 'contents.mp3')
+titless = os.path.join(components_dir, 'title.png')
+creditbarss = os.path.join(components_dir, 'credit.png')
+finalimgage = os.path.join(components_dir, 'image.png')
+finalnooverlay = os.path.join(components_dir, 'final-overlay.mp4')
+final = os.path.join(outputs_dir, 'final.mp4')  # Final output goes to the outputs folder
 backgroundvideo = 'backgroundvideo.mp4'
 
-# Configure PATH for ImageMagick and 
+# Configure PATH for ImageMagick
 os.environ["PATH"] += os.pathsep + r"C:\Program Files\ImageMagick-7.0.10-Q16"
-
-
-# Remove existing files if they exist to avoid conflicts
-for file in [titleaudio, contentsaudio, titless, creditbarss, finalimgage, finalnooverlay, final]:
-    if os.path.exists(file):
-        os.remove(file)
 
 # Function to generate speech audio from text
 async def save_speech(text, voice, output_file):
@@ -132,7 +150,6 @@ def process_video():
 
     # Load the main video clip
     video_clip = VideoFileClip(backgroundvideo)
-
 
     # Load audio files for title and content
     title_audio = AudioFileClip(titleaudio)
