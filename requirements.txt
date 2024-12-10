@@ -1,8 +1,0 @@
-praw
-edge-tts
-chromedriver-autoinstaller
-pillow
-pytubefix
-selenium
-moviepy
-numpy
